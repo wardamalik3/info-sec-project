@@ -23,18 +23,23 @@ Modern communication systems face a critical challenge: **how to enable private 
 ## Key Security Challenges
 
 ### 1. Server-Side Vulnerability
+
 Conventional platforms give servers access to encryption keys, creating risks from data breaches, insider threats, government surveillance, and third-party access.
 
 ### 2. Man-in-the-Middle (MITM) Attacks
+
 Without proper authentication, attackers can intercept key exchanges, impersonate users, and read or modify messages without detection.
 
 ### 3. Replay Attacks
+
 Attackers can capture and resend encrypted messages, causing confusion or triggering unintended actions.
 
 ### 4. Key Management Complexity
+
 Secure communication requires proper key generation, exchange, storage, and rotation while ensuring private keys never leave user devices.
 
 ### 5. Lack of Accountability
+
 Without logging and auditing, security incidents cannot be detected, investigated, or analyzed.
 
 ## Problem Definition
@@ -44,6 +49,7 @@ Without logging and auditing, security incidents cannot be detected, investigate
 ## Core Requirements
 
 ### Functional Requirements
+
 - **User Authentication**: Secure registration and login with bcrypt password hashing
 - **Key Management**: ECDH and ECDSA key pair generation and secure storage
 - **Secure Key Exchange**: Authenticated Diffie-Hellman protocol with digital signatures
@@ -53,6 +59,7 @@ Without logging and auditing, security incidents cannot be detected, investigate
 - **Security Logging**: Comprehensive logging of authentication, key exchanges, and security events
 
 ### Security Requirements
+
 - **Confidentiality**: Messages never exist in plaintext on the server
 - **Authenticity**: Digital signatures verify user identities
 - **Integrity**: AES-GCM authenticated encryption prevents tampering
@@ -62,6 +69,7 @@ Without logging and auditing, security incidents cannot be detected, investigate
 ## Success Criteria
 
 The project is successful if:
+
 1. ✅ End-to-end encryption is demonstrated
 2. ✅ MITM attacks are prevented via digital signatures
 3. ✅ Replay attacks are detected and rejected
