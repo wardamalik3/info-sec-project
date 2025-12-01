@@ -1,0 +1,54 @@
+// MANUAL FIX FOR ChatWindow.jsx
+// Add this code to the handleIncomingMessage function
+// Location: Around line 76-83
+
+const handleIncomingMessage = async (data) => {
+    addLog(`Handling text from ${data.sender}. ActiveChat: ${activeChat?.username}`);
+
+    if (!activeChat || activeChat.username !== data.sender) {
+        addLog(`IGNORED: ActiveChat mismatch. Expected ${activeChat?.username}, got ${data.sender}`);
+        return;
+    }
+
+    // ============================================
+    // REPLAY ATTACK PROTECTION: Verify message
+    // ============================================
+    const verification = replayProtection.verifyMessage(data, data.sender);
+    if (!verification.valid) {
+        console.error('%c🚨 REPLAY ATTACK BLOCKED', 'background: #F44336; color: white; font-weight: bold; padding: 5px;');
+        console.error('Reason:', verification.reason);
+        console.error('Message:', data);
+        addLog(`🚨 REPLAY ATTACK BLOCKED: ${verification.reason}`);
+        alert(`⚠️ Security Alert: Message rejected!\n\nReason: ${verification.reason}\n\nThis message was blocked to protect you from a replay attack.`);
+        return; // REJECT THE MESSAGE - Don't decrypt or display it
+    }
+
+    try {
+        // Log received encrypted message for demonstration
+        console.log('%c📥 RECEIVED ENCRYPTED MESSAGE', 'background: #2196F3; color: white; font-weight: bold; padding: 5px;');
+        console.log('Encrypted Message Object:', {
+            sender: data.sender,
+            type: data.type,
+            ciphertext: data.ciphertext,
+            iv: data.iv,
+            nonce: data.nonce?.substring(0, 16) + '...',
+            timestamp: new Date(data.timestamp).toLocaleString(),
+            sequence: data.sequence
+        });
+        console.log('Ciphertext (first 20 bytes):', data.ciphertext.slice(0, 20));
+        console.log('IV (12 bytes):', data.iv);
+        
+        const decrypted = await decryptMessage(activeChat.sharedKey, data.ciphertext, data.iv);
+        
+        console.log('✅ Decrypted plaintext:', decrypted);
+        console.log('✅ Message verified - No replay attack detected');
+        console.log('---');
+        
+        addLog(`Decrypted: ${decrypted}`);
+        setMessages(prev => [...prev, { sender: data.sender, text: decrypted, timestamp: Date.now() }]);
+    } catch (err) {
+        addLog(`Decryption failed: ${err.message}`);
+        console.error('Decryption failed:', err);
+        alert(`Failed to decrypt message from ${data.sender}: ${err.message}`);
+    }
+};
