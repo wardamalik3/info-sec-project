@@ -47,7 +47,7 @@ const ChatWindow = () => {
     const handleHandshake = async (data) => {
         try {
             addLog(`Processing handshake from ${data.sender}`);
-            console.log('🔍 Handshake data received:', {
+            console.log('Handshake data received:', {
                 sender: data.sender,
                 hasEphemeralKey: !!data.ephemeralPublicKey,
                 hasSignature: !!data.signature,
@@ -64,19 +64,19 @@ const ChatWindow = () => {
             }
             addLog(`✓ Retrieved ${data.sender}'s signing key`);
 
-            addLog('🔐 Deriving AES-GCM 256-bit session key using ECDH...');
+            addLog('Deriving AES-GCM 256-bit session key using ECDH...');
             const sharedKey = await respondToKeyExchange(
                 data.ephemeralPublicKey,
                 senderSigningKey,
                 data.signature
             );
-            addLog('✅ Session key derived successfully!');
+            addLog('Session key derived successfully!');
 
             // Export key info for demonstration
             const keyInfo = await exportSessionKeyForDemo(sharedKey);
             if (keyInfo) {
                 setSessionKeyInfo({ ...keyInfo, role: 'Responder', peer: data.sender });
-                addLog(`📊 Key: ${keyInfo.algorithm}-${keyInfo.keyLength} | Preview: ${keyInfo.keyPreview}`);
+                addLog(`Key: ${keyInfo.algorithm}-${keyInfo.keyLength} | Preview: ${keyInfo.keyPreview}`);
             }
 
             addLog(`Shared Key Established with ${data.sender}`);
@@ -89,21 +89,21 @@ const ChatWindow = () => {
             let troubleshooting = '';
 
             if (err.message.includes('Invalid signature')) {
-                troubleshooting = '\n\n🔧 Troubleshooting:\n- The sender may have re-registered with new keys\n- Try having both users logout and login again\n- Clear browser data and re-register if issue persists';
+                troubleshooting = '\n\nTroubleshooting:\n- The sender may have re-registered with new keys\n- Try having both users logout and login again\n- Clear browser data and re-register if issue persists';
             } else if (err.message.includes('not found')) {
-                troubleshooting = `\n\n🔧 Troubleshooting:\n- User "${data.sender}" may not be registered\n- Check the username spelling\n- Ask ${data.sender} to register an account`;
+                troubleshooting = `\n\nTroubleshooting:\n- User "${data.sender}" may not be registered\n- Check the username spelling\n- Ask ${data.sender} to register an account`;
             } else if (err.message.includes('Encryption Private Key not found')) {
-                troubleshooting = '\n\n🔧 Troubleshooting:\n- Your private keys are missing from this device\n- You need to logout and register again on this device\n- Keys are stored locally and cannot be transferred';
+                troubleshooting = '\n\nTroubleshooting:\n- Your private keys are missing from this device\n- You need to logout and register again on this device\n- Keys are stored locally and cannot be transferred';
             } else {
-                troubleshooting = '\n\n🔧 Troubleshooting:\n- Check browser console for detailed error\n- Ensure both users are registered properly\n- Try refreshing the page';
+                troubleshooting = '\n\nTroubleshooting:\n- Check browser console for detailed error\n- Ensure both users are registered properly\n- Try refreshing the page';
             }
 
-            addLog(`❌ ${errorMessage}`);
-            console.error('🚨 Handshake failed - Full error details:', err);
+            addLog(` ${errorMessage}`);
+            console.error(' Handshake failed - Full error details:', err);
             console.error('Error stack:', err.stack);
             console.error('Handshake data that caused error:', data);
 
-            alert(`❌ Handshake Failed!\n\nError: ${err.message}${troubleshooting}`);
+            alert(`Handshake Failed!\n\nError: ${err.message}${troubleshooting}`);
             logSecurityEvent('KEY_EXCHANGE_FAIL', {
                 with: data.sender,
                 role: 'Responder',
@@ -122,23 +122,23 @@ const ChatWindow = () => {
             return;
         }
 
-        // ============================================
+       
         // REPLAY ATTACK PROTECTION: Verify message
-        // ============================================
+      
         const verification = replayProtection.verifyMessage(data, data.sender);
         if (!verification.valid) {
-            console.error('%c🚨 REPLAY ATTACK BLOCKED', 'background: #F44336; color: white; font-weight: bold; padding: 5px;');
+            console.error('%cREPLAY ATTACK BLOCKED', 'background: #F44336; color: white; font-weight: bold; padding: 5px;');
             console.error('Reason:', verification.reason);
             console.error('Message:', data);
-            addLog(`🚨 REPLAY ATTACK BLOCKED: ${verification.reason}`);
+            addLog(`REPLAY ATTACK BLOCKED: ${verification.reason}`);
             logSecurityEvent('REPLAY_ATTACK_DETECTED', { sender: data.sender, reason: verification.reason, message: data });
-            alert(`⚠️ Security Alert: Message rejected!\n\nReason: ${verification.reason}\n\nThis message was blocked to protect you from a replay attack.`);
+            alert(`Security Alert: Message rejected!\n\nReason: ${verification.reason}\n\nThis message was blocked to protect you from a replay attack.`);
             return; // REJECT THE MESSAGE - Don't decrypt or display it
         }
 
         try {
             // Log received encrypted message for demonstration
-            console.log('%c📥 RECEIVED ENCRYPTED MESSAGE', 'background: #2196F3; color: white; font-weight: bold; padding: 5px;');
+            console.log('%c RECEIVED ENCRYPTED MESSAGE', 'background: #2196F3; color: white; font-weight: bold; padding: 5px;');
             console.log('Encrypted Message Object:', {
                 sender: data.sender,
                 type: data.type,
@@ -153,8 +153,8 @@ const ChatWindow = () => {
 
             const decrypted = await decryptMessage(activeChat.sharedKey, data.ciphertext, data.iv);
 
-            console.log('✅ Decrypted plaintext:', decrypted);
-            console.log('✅ Message verified - No replay attack detected');
+            console.log('Decrypted plaintext:', decrypted);
+            console.log(' Message verified - No replay attack detected');
             console.log('---');
 
             addLog(`Decrypted: ${decrypted}`);
@@ -170,12 +170,12 @@ const ChatWindow = () => {
     const startChat = async () => {
         try {
             if (!recipient || recipient.trim() === '') {
-                alert('❌ Please enter a username to connect with');
+                alert('Please enter a username to connect with');
                 return;
             }
 
             addLog(`Starting chat with ${recipient}`);
-            console.log('🔍 Initiating handshake with:', recipient);
+            console.log('Initiating handshake with:', recipient);
 
             // Fetch recipient's public keys
             addLog(`Fetching ${recipient}'s public keys from server...`);
@@ -192,18 +192,18 @@ const ChatWindow = () => {
                 publicKeyPreview: JSON.stringify(publicKey).substring(0, 100)
             });
 
-            addLog('🔐 Deriving AES-GCM 256-bit session key using ECDH...');
+            addLog(' Deriving AES-GCM 256-bit session key using ECDH...');
             const { ephemeralPublicKey, signature, sharedSecretKey } = await initiateKeyExchange(publicKey, signingPublicKey);
-            addLog('✅ Session key derived successfully!');
+            addLog('Session key derived successfully!');
 
             // Export key info for demonstration
             const keyInfo = await exportSessionKeyForDemo(sharedSecretKey);
             if (keyInfo) {
                 setSessionKeyInfo({ ...keyInfo, role: 'Initiator', peer: recipient });
-                addLog(`📊 Key: ${keyInfo.algorithm}-${keyInfo.keyLength} | Preview: ${keyInfo.keyPreview}`);
+                addLog(`Key: ${keyInfo.algorithm}-${keyInfo.keyLength} | Preview: ${keyInfo.keyPreview}`);
             }
 
-            console.log('📤 Sending handshake message:', {
+            console.log(' Sending handshake message:', {
                 to: recipient,
                 type: 'handshake',
                 sender: currentUser.username,
@@ -230,25 +230,25 @@ const ChatWindow = () => {
 
             if (err.response?.status === 404) {
                 errorMessage = `User "${recipient}" not found`;
-                troubleshooting = '\n\n🔧 Troubleshooting:\n- Check the username spelling (case-sensitive)\n- Ask the user to register an account\n- Verify the username is correct';
+                troubleshooting = '\n\n Troubleshooting:\n- Check the username spelling (case-sensitive)\n- Ask the user to register an account\n- Verify the username is correct';
             } else if (err.message.includes('Encryption keys not found')) {
                 errorMessage = 'Your encryption keys are missing';
-                troubleshooting = '\n\n🔧 Troubleshooting:\n- You need to logout and register again on this device\n- Keys are stored locally in your browser\n- Clearing browser data will delete your keys';
+                troubleshooting = '\n\n Troubleshooting:\n- You need to logout and register again on this device\n- Keys are stored locally in your browser\n- Clearing browser data will delete your keys';
             } else if (err.message.includes('Signing Key not found')) {
                 errorMessage = 'Your signing key is missing';
-                troubleshooting = '\n\n🔧 Troubleshooting:\n- You need to logout and register again on this device\n- Keys are stored locally in your browser';
+                troubleshooting = '\n\n Troubleshooting:\n- You need to logout and register again on this device\n- Keys are stored locally in your browser';
             } else if (err.message.includes('no public keys')) {
-                troubleshooting = `\n\n🔧 Troubleshooting:\n- Ask "${recipient}" to logout and register again\n- Their keys may be corrupted`;
+                troubleshooting = `\n\n Troubleshooting:\n- Ask "${recipient}" to logout and register again\n- Their keys may be corrupted`;
             } else {
-                troubleshooting = '\n\n🔧 Troubleshooting:\n- Check browser console for detailed error\n- Ensure you are registered and logged in\n- Try refreshing the page';
+                troubleshooting = '\n\n Troubleshooting:\n- Check browser console for detailed error\n- Ensure you are registered and logged in\n- Try refreshing the page';
             }
 
-            addLog(`❌ Start chat failed: ${errorMessage}`);
-            console.error('🚨 Failed to start chat - Full error details:', err);
+            addLog(` Start chat failed: ${errorMessage}`);
+            console.error(' Failed to start chat - Full error details:', err);
             console.error('Error response:', err.response);
             console.error('Error stack:', err.stack);
 
-            alert(`❌ Connection Failed!\n\nError: ${errorMessage}${troubleshooting}`);
+            alert(` Connection Failed!\n\nError: ${errorMessage}${troubleshooting}`);
             logSecurityEvent('KEY_EXCHANGE_INIT_FAIL', {
                 with: recipient,
                 error: errorMessage,
@@ -274,7 +274,7 @@ const ChatWindow = () => {
             });
 
             // Log encrypted message for demonstration
-            console.log('%c📤 SENDING ENCRYPTED MESSAGE', 'background: #4CAF50; color: white; font-weight: bold; padding: 5px;');
+            console.log('%c SENDING ENCRYPTED MESSAGE', 'background: #4CAF50; color: white; font-weight: bold; padding: 5px;');
             console.log('Plaintext:', input);
             console.log('Encrypted Message Object:', messageData);
             console.log('Replay Protection:', {
@@ -322,7 +322,7 @@ const ChatWindow = () => {
                 {/* Session Key Information Panel */}
                 {sessionKeyInfo && (
                     <div className="session-key-panel">
-                        <h3>🔐 SESSION KEY DERIVED</h3>
+                        <h3> SESSION KEY DERIVED</h3>
                         <div className="key-info">
                             <div className="key-info-row">
                                 <span className="key-info-label">Role:</span>

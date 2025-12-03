@@ -28,7 +28,7 @@ const FileDownload = ({ activeChat, currentUser }) => {
 
         setLoading(true);
         try {
-            console.log('%c📥 DOWNLOADING ENCRYPTED FILE', 'background: #FF9800; color: white; font-weight: bold; padding: 5px;');
+            console.log('%c DOWNLOADING ENCRYPTED FILE', 'background: #FF9800; color: white; font-weight: bold; padding: 5px;');
             console.log('File metadata:', file);
 
             // 1. Download encrypted file
@@ -43,14 +43,14 @@ const FileDownload = ({ activeChat, currentUser }) => {
             console.log('IV:', iv);
 
             // 3. Decrypt file using shared session key
-            console.log('🔓 Decrypting file with AES-256-GCM...');
+            console.log(' Decrypting file with AES-256-GCM...');
             const decrypted = await window.crypto.subtle.decrypt(
                 { name: 'AES-GCM', iv: new Uint8Array(iv) },
                 activeChat.sharedKey,
                 response.data
             );
 
-            console.log('✅ File decrypted successfully!');
+            console.log(' File decrypted successfully!');
             console.log('Decrypted size:', decrypted.byteLength, 'bytes');
 
             // 4. Create blob and download
@@ -64,7 +64,7 @@ const FileDownload = ({ activeChat, currentUser }) => {
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
 
-            console.log('💾 File saved as:', file.originalName);
+            console.log(' File saved as:', file.originalName);
             console.log('---');
 
             alert(`File "${file.originalName}" decrypted and downloaded!`);

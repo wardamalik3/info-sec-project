@@ -435,3 +435,15 @@
 [2025-11-28T17:29:20.921Z] [KEY_EXCHANGE_SUCCESS] {"with":"alice","role":"Responder"}
 [2025-11-28T17:29:21.050Z] [SOCKET_REGISTER] {"username":"bob2","socketId":"XD28pbmoVk8vh5i8AAAN"}
 [2025-11-28T17:29:22.639Z] [SOCKET_REGISTER] {"username":"alice","socketId":"bKEeTW4SIU9ksU1eAAAJ"}
+[2025-12-01T08:18:53.643Z] [AUTH_LOGIN_SUCCESS] {"username":"warda"}
+[2025-12-01T08:18:53.853Z] [SOCKET_REGISTER] {"username":"warda","socketId":"B-6PKl5NYQ4WHfsvAAAB"}
+[2025-12-01T08:18:53.870Z] [SOCKET_REGISTER] {"username":"warda","socketId":"B-6PKl5NYQ4WHfsvAAAB"}
+[2025-12-01T08:19:21.833Z] [AUTH_LOGIN_SUCCESS] {"username":"muskan"}
+[2025-12-01T08:19:21.922Z] [SOCKET_REGISTER] {"username":"muskan","socketId":"8xETE5IbMxidjEDlAAAD"}
+[2025-12-01T08:19:21.926Z] [SOCKET_REGISTER] {"username":"muskan","socketId":"8xETE5IbMxidjEDlAAAD"}
+[2025-12-01T08:19:39.801Z] [KEY_FETCH] {"requester":"unknown","target":"muskan"}
+[2025-12-01T08:19:39.967Z] [KEY_EXCHANGE_INIT] {"with":"muskan","role":"Initiator"}
+[2025-12-01T08:19:40.309Z] [KEY_FETCH] {"requester":"unknown","target":"warda"}
+[2025-12-01T08:19:40.345Z] [INVALID_SIGNATURE] {"senderSigningPublicKey":{"crv":"P-256","ext":true,"key_ops":["verify"],"kty":"EC","x":"2d6bXvB0ZTMaVAzq3oUbVS6d7ALYetSJR26uVpg8VWM","y":"jgDc0zIM_vIsfb1dQsBiXqixRGtrZ-meH1CvPY5HQpc"},"signature":[185,89,8,106,114,25,34,106,135,180,120,31,155,35,115,121,163,7,221,77,11,29,220,124,226,158,64,249,148,133,63,22,108,48,118,124,153,49,81,52,159,3,34,205,136,129,6,10,123,97,188,177,119,187,52,254,131,180,155,154,78,184,117,137]}
+[2025-12-01T08:19:42.628Z] [SOCKET_REGISTER] {"username":"warda","socketId":"B-6PKl5NYQ4WHfsvAAAB"}
+[2025-12-01T08:20:15.994Z] [KEY_EXCHANGE_FAIL] {"with":"warda","role":"Responder","error":"Invalid signature during key exchange","errorStack":"respondToKeyExchange@http://localhost:5173/src/utils/protocol.js:64:15\n"}

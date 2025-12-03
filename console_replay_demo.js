@@ -11,7 +11,7 @@
  * 6. You'll see replay attacks being blocked!
  */
 
-console.log('%c🎯 REPLAY ATTACK DEMONSTRATION', 'background: #2196F3; color: white; font-weight: bold; padding: 10px; font-size: 16px;');
+console.log('%cREPLAY ATTACK DEMONSTRATION', 'background: #2196F3; color: white; font-weight: bold; padding: 10px; font-size: 16px;');
 console.log('This will test the replay protection and show rejections in console');
 console.log('');
 
@@ -43,7 +43,7 @@ const testMessage3 = {
     sequence: 3
 };
 
-console.log('%c📋 TEST MESSAGES CREATED', 'background: #4CAF50; color: white; padding: 5px;');
+console.log('%c TEST MESSAGES CREATED', 'background: #4CAF50; color: white; padding: 5px;');
 console.log('Message 1: Normal message');
 console.log('Message 2: Replay (same nonce as Message 1)');
 console.log('Message 3: Old message (10 minutes ago)');
@@ -53,7 +53,7 @@ console.log('');
 // Note: You need to have replayProtection available
 // This works if you're on the chat page
 
-console.log('%c⚠️ TO SEE REPLAY ATTACKS BLOCKED:', 'background: orange; color: white; padding: 5px;');
+console.log('%c TO SEE REPLAY ATTACKS BLOCKED:', 'background: orange; color: white; padding: 5px;');
 console.log('');
 console.log('METHOD 1: Send a message twice');
 console.log('  1. Send "Hello" from Alice');
@@ -72,7 +72,7 @@ console.log('  2. Type: replayProtection.usedNonces (to see stored nonces)');
 console.log('  3. Type: replayProtection.sequenceNumbers (to see sequence tracking)');
 console.log('');
 
-console.log('%c📸 FOR YOUR REPORT - SCREENSHOT THIS:', 'background: purple; color: white; padding: 5px;');
+console.log('%c FOR YOUR REPORT - SCREENSHOT THIS:', 'background: purple; color: white; padding: 5px;');
 console.log('');
 console.log('1. Send a message and show console output with:');
 console.log('   - Nonce: "abc123..."');
@@ -85,4 +85,4 @@ console.log('3. Explain: "If this message were replayed, the verification would 
 console.log('   because the nonce would already be in usedNonces Set"');
 console.log('');
 
-console.log('%c✅ DEMONSTRATION READY', 'background: #4CAF50; color: white; font-weight: bold; padding: 5px;');
+console.log('%c DEMONSTRATION READY', 'background: #4CAF50; color: white; font-weight: bold; padding: 5px;');
