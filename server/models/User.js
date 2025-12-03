@@ -3,30 +3,30 @@ const bcrypt = require('bcrypt');
 
 const UserSchema = new mongoose.Schema({
     username: {
-        type: String,
-        required: true,
-        unique: true,
-        trim: true,
-        minlength: 3
+        type:String,
+        required:true,
+        unique:true,
+        trim:true,
+        minlength:3
     },
     password: {
-        type: String,
-        required: true,
-        minlength: 6
+        type:String,
+        required:true,
+        minlength:6
     },
     // Public keys for End-to-End Encryption
     publicKey: {
-        type: Object, // Store JWK or PEM string
-        required: true
+        type:Object, // Store JWK or PEM string
+        required:true
     },
     // Optional: For signature verification
     signingPublicKey: {
-        type: Object,
-        required: true
+        type:Object,
+        required:true
     },
     createdAt: {
-        type: Date,
-        default: Date.now
+        type:Date,
+        default:Date.now
     }
 });
 

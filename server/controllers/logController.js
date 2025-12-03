@@ -7,7 +7,7 @@ exports.reportLog = (req, res) => {
     log(event, details);
     res.status(200).json({ message: 'Log received' });
 };
-
+//
 exports.getLogs = (req, res) => {
     const logFile = path.join(__dirname, '../../logs/security.log');
     if (fs.existsSync(logFile)) {
